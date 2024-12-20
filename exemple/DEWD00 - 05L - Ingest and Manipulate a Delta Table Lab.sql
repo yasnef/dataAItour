@@ -40,24 +40,6 @@
 
 -- COMMAND ----------
 
--- MAGIC %python
--- MAGIC
--- MAGIC #This module provides various utilities for users to interact with the rest of Databricks.
--- MAGIC #credentials: DatabricksCredentialUtils -> Utilities for interacting with credentials within notebooks
--- MAGIC #data: DataUtils -> Utilities for understanding and interacting with datasets (EXPERIMENTAL)
--- MAGIC #fs: DbfsUtils -> Manipulates the Databricks filesystem (DBFS) from the console
--- MAGIC #jobs: JobsUtils -> Utilities for leveraging jobs features
--- MAGIC #library: LibraryUtils -> Utilities for session isolated libraries
--- MAGIC #meta: MetaUtils -> Methods to hook into the compiler (EXPERIMENTAL)
--- MAGIC #notebook: NotebookUtils -> Utilities for the control flow of a notebook (EXPERIMENTAL)
--- MAGIC #preview: Preview -> Utilities under preview category
--- MAGIC #secrets: SecretUtils -> Provides utilities for leveraging secrets within notebooks
--- MAGIC #widgets: WidgetsUtils -> Methods to create and get bound value of input widgets inside notebooks
--- MAGIC
--- MAGIC dbutils.data.help()
-
--- COMMAND ----------
-
 -- MAGIC %md
 -- MAGIC ## Begin Lab
 
@@ -88,6 +70,7 @@ Use schema IDENTIFIER(:my_schema) ;
 -- COMMAND ----------
 
 -- TODO 
+Select current_catalog() as catalogue, current_schema() as schema;
 -- <FILL_IN>
 
 -- COMMAND ----------
@@ -98,6 +81,7 @@ Use schema IDENTIFIER(:my_schema) ;
 -- COMMAND ----------
 
 -- TODO 
+show volumes;
 -- <FILL_IN>
 
 -- COMMAND ----------
@@ -109,8 +93,7 @@ Use schema IDENTIFIER(:my_schema) ;
 
 -- COMMAND ----------
 
--- TODO 
--- <FILL_IN>
+LIST '/Volumes/${module_catalog}/${my_schema}/taxi_files'
 
 -- COMMAND ----------
 
@@ -122,6 +105,7 @@ Use schema IDENTIFIER(:my_schema) ;
 -- COMMAND ----------
 
 -- TODO 
+select * from csv. `/Volumes/${module_catalog}/${my_schema}/taxi_files`
 -- <FILL_IN>
 
 -- COMMAND ----------
@@ -142,6 +126,8 @@ Use schema IDENTIFIER(:my_schema) ;
 -- COMMAND ----------
 
 -- TODO 
+create or replace table taxitrips_bronze (tpep_pickup_datetime TIMESTAMP,tpep_dropoff_datetime TIMESTAMP , trip_distance  DOUBLE, fare_amount  DOUBLE, pickup_zip  INT, dropoff_zip  INT );
+
 -- <FILL_IN>
 
 -- COMMAND ----------
@@ -156,6 +142,11 @@ Use schema IDENTIFIER(:my_schema) ;
 -- COMMAND ----------
 
 -- TODO 
+copy into  taxitrips_bronze
+from  '/Volumes/${module_catalog}/${my_schema}/taxi_files'
+fileformat = csv
+format_options ('header'='true', 'delimiter' = ',', 'inferschema'='true')
+
 -- <FILL_IN>
 
 -- COMMAND ----------
@@ -166,6 +157,8 @@ Use schema IDENTIFIER(:my_schema) ;
 -- COMMAND ----------
 
 -- TODO 
+select count(*) from taxitrips_bronze
+--21932
 -- <FILL_IN>
 
 -- COMMAND ----------
@@ -176,6 +169,7 @@ Use schema IDENTIFIER(:my_schema) ;
 -- COMMAND ----------
 
 -- TODO 
+describe history taxitrips_bronze
 -- <FILL_IN>
 
 -- COMMAND ----------
@@ -186,6 +180,7 @@ Use schema IDENTIFIER(:my_schema) ;
 -- COMMAND ----------
 
 -- TODO 
+delete from taxitrips_bronze where trip_distance < 1
 -- <FILL_IN>
 
 -- COMMAND ----------
@@ -196,6 +191,7 @@ Use schema IDENTIFIER(:my_schema) ;
 -- COMMAND ----------
 
 -- TODO 
+describe history taxitrips_bronze
 -- <FILL_IN>
 
 -- COMMAND ----------
@@ -208,6 +204,7 @@ Use schema IDENTIFIER(:my_schema) ;
 -- COMMAND ----------
 
 -- TODO 
+SELECT count(*) from  taxitrips_bronze
 -- <FILL_IN>
 
 -- COMMAND ----------
@@ -220,6 +217,7 @@ Use schema IDENTIFIER(:my_schema) ;
 -- COMMAND ----------
 
 -- TODO 
+select count(*) from taxitrips_bronze version as of 3
 -- <FILL_IN>
 
 -- COMMAND ----------
@@ -233,6 +231,7 @@ Use schema IDENTIFIER(:my_schema) ;
 -- COMMAND ----------
 
 -- TODO 
+RESTORE TABLE taxitrips_bronze VERSION AS OF 3
 -- <FILL_IN>
 
 -- COMMAND ----------
@@ -243,6 +242,7 @@ Use schema IDENTIFIER(:my_schema) ;
 -- COMMAND ----------
 
 -- TODO 
+DESCRIBE HISTORY taxitrips_bronze
 -- <FILL_IN>
 
 -- COMMAND ----------

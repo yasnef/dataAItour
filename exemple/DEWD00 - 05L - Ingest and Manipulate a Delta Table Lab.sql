@@ -40,6 +40,24 @@
 
 -- COMMAND ----------
 
+-- MAGIC %python
+-- MAGIC
+-- MAGIC #This module provides various utilities for users to interact with the rest of Databricks.
+-- MAGIC #credentials: DatabricksCredentialUtils -> Utilities for interacting with credentials within notebooks
+-- MAGIC #data: DataUtils -> Utilities for understanding and interacting with datasets (EXPERIMENTAL)
+-- MAGIC #fs: DbfsUtils -> Manipulates the Databricks filesystem (DBFS) from the console
+-- MAGIC #jobs: JobsUtils -> Utilities for leveraging jobs features
+-- MAGIC #library: LibraryUtils -> Utilities for session isolated libraries
+-- MAGIC #meta: MetaUtils -> Methods to hook into the compiler (EXPERIMENTAL)
+-- MAGIC #notebook: NotebookUtils -> Utilities for the control flow of a notebook (EXPERIMENTAL)
+-- MAGIC #preview: Preview -> Utilities under preview category
+-- MAGIC #secrets: SecretUtils -> Provides utilities for leveraging secrets within notebooks
+-- MAGIC #widgets: WidgetsUtils -> Methods to create and get bound value of input widgets inside notebooks
+-- MAGIC
+-- MAGIC dbutils.data.help()
+
+-- COMMAND ----------
+
 -- MAGIC %md
 -- MAGIC ## Begin Lab
 
